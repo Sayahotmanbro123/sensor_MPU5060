@@ -2,6 +2,7 @@ name: ESP32 Wokwi CI
 
 on: [push, pull_request]
 
+
 jobs:
   build_and_simulate:
     runs-on: ubuntu-latest
