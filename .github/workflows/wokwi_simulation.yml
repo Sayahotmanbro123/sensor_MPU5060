@@ -2,22 +2,25 @@ name: ESP32 Wokwi CI
 
 on: [push, pull_request]
 
-
 jobs:
   build_and_simulate:
     runs-on: ubuntu-latest
+
     steps:
+      # 1. Ambil kode dari repositori GitHub
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install ESP-IDF and Build
-        uses: espressif/esp-idf-ci-action@v1
+      # 2. Build projek menggunakan Docker Image resmi Espressif (ESP-IDF)
+      - name: Build ESP-IDF Project
+        uses: espressif/idf-build-action@v1.5
         with:
-          esp_idf_version: 'v5.4.1'
-          target: 'esp32'
-          path: '.'
+          esp_idf_version: v5.1 # Sesuaikan dengan versi IDF yang kamu pakai (misal v5.0, v5.1, dll)
+          target: esp32
 
+      # 3. Jalankan simulasi dengan Wokwi setelah file .bin berhasil dibuat
       - name: Simulate with Wokwi
-        run: |
-          export WOKWI_CLI_TOKEN=${{ secrets.WOKWI_CLI_TOKEN }}
-          idf.py wokwi --timeout 30000 --expect-text "Hello, Wokwi!"
+        uses: wokwi/wokwi-ci-action@v1
+        with:
+          token: ${{ secrets.WOKWI_CLI_TOKEN }}
+          path_to_project: '.'
