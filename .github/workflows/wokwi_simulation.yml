@@ -24,3 +24,4 @@ jobs:
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
           path_to_project: '.'
+          timeout: 5000
