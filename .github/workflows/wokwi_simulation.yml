@@ -1,3 +1,4 @@
+version: 1
 name: Wokwi Simulation CI
 
 on:
@@ -14,8 +15,9 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
+      # PERBAIKAN DI SINI: Menggunakan nama repo resmi yang valid
       - name: Build ESP-IDF Project
-        uses: espressif/idf-build-action@v1
+        uses: espressif/esp-idf-ci-action@v1
         with:
           esp_idf_version: v5.4.1
           target: esp32
