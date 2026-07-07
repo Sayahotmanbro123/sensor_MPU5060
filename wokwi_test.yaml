@@ -1,0 +1,12 @@
+﻿name: 'Your scenario name'
+version: 1
+author: 'Hotman Pangaribuan'
+
+steps:
+  # List of steps:
+  - set-control:
+      part-id: btn1
+      control: pressed
+      value: 1
+  - delay: 500ms
+  - wait-serial: 'Button 1 pressed'

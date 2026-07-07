@@ -9,8 +9,20 @@
       "top": 0,
       "left": 0,
       "attrs": { "builder": "esp-idf" }
+    },
+    {
+      "type": "wokwi-pushbutton-6mm",
+      "id": "btn1",
+      "top": 74.6,
+      "left": -115.2,
+      "attrs": { "color": "green", "xray": "1" }
     }
   ],
-  "connections": [ [ "esp:TX", "$serialMonitor:RX", "", [] ], [ "esp:RX", "$serialMonitor:TX", "", [] ] ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "btn1:1.r", "esp:3V3", "green", [ "v0" ] ],
+    [ "btn1:2.r", "esp:12", "green", [ "h0.8", "v38.8" ] ]
+  ],
   "dependencies": {}
 }
