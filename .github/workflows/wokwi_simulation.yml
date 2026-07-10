@@ -1,28 +1,24 @@
-name: Wokwi Simulation CI
+name: Otomatisasi Pengujian ESP32 MPU6050
 
+# Memicu alur kerja setiap ada push ke branch 'main' atau dipicu manual
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
-  run-simulation:
+  run-wokwi-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repo
+      # Langkah 1: Mengambil kode terbaru dari repositori GitHub
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Build ESP-IDF Project
-        uses: espressif/esp-idf-ci-action@v1
-        with:
-          esp_idf_version: v5.4.1
-          target: esp32
-
-      - name: Run Wokwi CI Simulation
+      # Langkah 2: Menjalankan Pengujian Wokwi CLI secara otomatis
+      - name: Run Wokwi CI Test
         uses: wokwi/wokwi-ci-action@v1
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
-          path: '.'
-          scenario: 'wokwi_test.yaml'
+          path: .
+          configPath: 'sensor_MPU5060_test.yaml'

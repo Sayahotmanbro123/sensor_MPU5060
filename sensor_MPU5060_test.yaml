@@ -1,0 +1,60 @@
+﻿name: 'Pengujian Integrasi MPU6050 Modern'
+version: 1
+author: 'Hotman Pangaribuan'
+
+steps:
+  # [FITUR 4]: Wait and Match Text from Serial - Menunggu sistem selesai booting awal
+  - wait-serial: "Sistem Siap. Menunggu masukan..."
+
+  # [FITUR 3]: Control a Part - Mengubah parameter fisik akselerasi & rotasi pada simulator MPU6050
+  - set-control:
+      part-id: imu1
+      control: accelX
+      value: 0.75
+  - set-control:
+      part-id: imu1
+      control: accelY
+      value: 0.55
+  - set-control:
+      part-id: imu1
+      control: accelZ
+      value: 0.60
+  - set-control:
+      part-id: imu1
+      control: rotationX
+      value: 60
+  - set-control:
+      part-id: imu1
+      control: rotationY
+      value: 95
+  - set-control:
+      part-id: imu1
+      control: rotationZ
+      value: 125
+
+  - set-control:
+      part-id: imu1
+      control: temperature
+      value: 25
+
+  # [FITUR 3]: Control a Part - Menekan tombol fisik (btn1) yang terhubung ke GPIO 8
+  - set-control:
+      part-id: btn1
+      control: pressed
+      value: 1
+
+  # [FITUR 1]: Wait (delay) - Jeda singkat agar register pin di simulator ter-update
+  - delay: 100ms
+
+  # [FITUR 2]: Assert Pin Value - Memvalidasi status Pin Tombol (Pin 8) berada pada posisi HIGH (1)
+  - expect-pin:
+      part-id: esp
+      pin: 8
+      value: 1
+
+  # [FITUR 4]: Wait and Match Text from Serial - Memvalidasi seluruh cetakan string data sensor dari ESP32
+  - wait-serial: "DATA_MPU_OK"
+  - wait-serial: "Acceleration : X=0.75 g, Y=0.55 g, Z=0.60 g"
+  - wait-serial: "Rotation     : X=60 °/sec, Y=95 °/sec, Z=125 °/sec"
+  - wait-serial: "Temperature  : 25.00 °C"
+      
