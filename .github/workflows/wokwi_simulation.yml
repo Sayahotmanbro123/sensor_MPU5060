@@ -1,5 +1,6 @@
 name: Otomatisasi Pengujian ESP32 MPU6050
 
+# Memicu alur kerja setiap ada push ke branch 'main' atau dijalankan manual
 on:
   push:
     branches: [ main ]
@@ -8,13 +9,18 @@ on:
 jobs:
   run-wokwi-test:
     runs-on: ubuntu-latest
+
     steps:
+      # Langkah 1: Mengunduh source code dari repositori GitHub
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # Langkah 2: Menjalankan otomatisasi simulator Wokwi CLI
       - name: Run Wokwi CI Test
         uses: wokwi/wokwi-ci-action@v1
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
           path: .
-          configPath: 'sensor_MPU5060_test.yaml'
+          scenario: 'sensor_MPU5060_test.yaml' # Menggunakan input parameter 'scenario' yang valid
+        env:
+          WOKWI_CLI_TOKEN: ${{ secrets.WOKWI_CLI_TOKEN }} # Menyuntikkan token ke environment runner
